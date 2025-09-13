@@ -1,0 +1,47 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class ApiService {
+  // غيّر اللينك دا بالـ URL الحقيقي بتاع الـ API
+  static const String baseUrl = "https://example.com/api";  
+
+  // لو محتاج API Key
+  static const String apiKey = "YOUR_API_KEY_HERE";
+
+  Future<http.Response> login(String email, String password) async {
+    final url = Uri.parse("$baseUrl/login");
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $apiKey", // لو API محتاج Key
+      },
+      body: jsonEncode({
+        "email": email,
+        "password": password,
+      }),
+    );
+    return response;
+  }
+
+  Future<http.Response> register(
+      String name, String phone, String email, String password) async {
+    final url = Uri.parse("$baseUrl/register");
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $apiKey", // لو API محتاج Key
+      },
+      body: jsonEncode({
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "password": password,
+      }),
+    );
+    return response;
+  }
+}
